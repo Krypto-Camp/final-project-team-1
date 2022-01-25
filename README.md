@@ -32,16 +32,16 @@ npm run dev
 
 **folder strcuture**
 ```bash
-- address # generate contract address file by deploy.js，客製寫法，避免前端要在部屬合約後一直更新合約地址
-- artifacts # compiled contract here, use npm run clean to delete it.
-- cache # hardhat deploy contract log, use npm run clean to remove the content in it and re-deploy ur contract.
-- contracts # write ur smart contract here!
-  - testing # example contract here
-- external # 外部合約 abi
-- scripts # scripts
+- address/ # generate contract address file by deploy.js，客製寫法，避免前端要在部屬合約後一直更新合約地址
+- artifacts/ # compiled contract here, use npm run clean to delete it.
+- cache/ # hardhat deploy contract log, use npm run clean to remove the content in it and re-deploy ur contract.
+- contracts/ # write ur smart contract here!
+  - testing/ # example contract here
+- external/ # 外部合約 abi
+- scripts/ # scripts
   - deploy.js # script ur compiled contracts
   - mint.js # mintApe demo js
-- test # testing contract by using ethers
+- test/ # testing contract by using ethers
 - hardhat.config.js # config 
 - .env # INFURA_PROJECT_ID, ACCOUNT_PRIVATE_KEY
 ```
@@ -67,8 +67,8 @@ ACCOUNT_PRIVATE_KEY='add_ur_own_metamask_develop_account_private_key_here'
 
 ### frontend/
 ```bash
-- src
-  - components
+- src/
+  - components/
     - GetContract.tsx # 如何操作合約參考
   - configs/contract.ts # 這裡引入合約
   - App.tsx
@@ -90,5 +90,7 @@ VITE_INFURA_ID='09b48a01c3e346868af7d548799be03e'
 
 ### 使用套件
 [Hardhat](https://hardhat.org/getting-started/)
+\
 [React Ethers Hook - Wagmi](https://wagmi-xyz.vercel.app/)
+\
 [Vite](https://cn.vitejs.dev/guide/#scaffolding-your-first-vite-project)
