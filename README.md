@@ -17,6 +17,7 @@ npm run dev
 
 #### 合約串接部分，可優先看 
 `frontend/src/components/GetContract.tsx`
+\
 `frontend/src/main.tsx`
 
 #### 合約撰寫
