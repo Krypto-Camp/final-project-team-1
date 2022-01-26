@@ -5,7 +5,9 @@ git clone git@github.com:Krypto-Camp/final-project-team-1.git
 cd final-project-team-1/backend
 node -v # 16.13.0
 npm install
-.env.example -> .env and paste ur infura project id, account private key
+copy .env.example and rename to .env and paste ur infura project id, account private key # u can get private key from the metamask developer account u have created before.
+# notice! if u didn't install hardhat global
+npm i hardhat -g
 npm run clean # reset the env
 npm run chain # run localhost chain by hardhat, keep this process, don't close it
 npm run deploy:localhost # compile and deploy contracts to localhost chain
