@@ -1,0 +1,36 @@
+name: production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - run: npm install # 安裝專案使用到的 package
+    - run: npm run build # vite 產出的靜態檔
+    - uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --acl public-read --follow-symlinks --delete
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_NAME }} # 這個就是對應 Github Secrets 的 Name
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        # AWS_REGION: 'us-west-1'   # optional: defaults to us-east-1
+        SOURCE_DIR: 'dist'      # optional: defaults to entire repository，指定資料夾內的檔案
+
+    # - name: Purge cache
+    #   uses: jakejarvis/cloudflare-purge-action@master
+      # env:
+        # Zone is required by both authentication methods
+        # CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+        # CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+        # ...or:
+        # CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
+        # CLOUDFLARE_KEY: ${{ secrets.CLOUDFLARE_KEY }}
