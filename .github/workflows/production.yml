@@ -17,7 +17,7 @@ jobs:
       working-directory: ./frontend
     - run: npm run build # vite 產出的靜態檔
       working-directory: ./frontend
-    - uses: jakejarvis/s3-sync-action@master
+    - uses: jakejarvis/s3-sync-action@main
       with:
         args: --acl public-read --follow-symlinks --delete
       env:
@@ -28,7 +28,7 @@ jobs:
         SOURCE_DIR: './frontend/dist'      # optional: defaults to entire repository，指定資料夾內的檔案
 
     # - name: Purge cache
-    #   uses: jakejarvis/cloudflare-purge-action@master
+    #   uses: jakejarvis/cloudflare-purge-action@main
       # env:
         # Zone is required by both authentication methods
         # CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}

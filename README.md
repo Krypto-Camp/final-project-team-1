@@ -90,6 +90,10 @@ npm run dev
 VITE_INFURA_ID='09b48a01c3e346868af7d548799be03e'
 ```
 
+### 部屬網站
+```bash
+git push origin main # 已連動 github action, 部屬至 aws s3
+```
 
 ### 使用套件
 [Hardhat](https://hardhat.org/getting-started/)
