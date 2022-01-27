@@ -29,7 +29,6 @@ export const GetContract = () => {
     const result = await mintApe({
       args: [1],
       overrides: {
-        from: "0xFF655f91EED51627936DCCF07DAd641B7130Fb8F",
         gasLimit: 203000,
         gasPrice: 60000000000,
         value: 100000000000000,
