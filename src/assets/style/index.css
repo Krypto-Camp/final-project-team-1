@@ -15,3 +15,116 @@
   left: 0;
   width: 100%;
 }
+
+.container-profile {
+  margin: 64px auto;
+  padding: 1rem;
+  max-width:1164px;
+}
+.type-tap-container{
+  display:flex;
+  border:1px solid #b6bacd;
+  width: fit-content;
+  margin:20px 0;
+}
+.type-tap-container h4{
+  padding:8px 14px;
+  border-right:1px solid #dee4fe;
+}
+.type-tap-container h4:hover{
+  background:rgb(206, 225, 245);
+  cursor:pointer;
+}
+.focus{
+  background:rgb(213, 223, 235);
+}
+
+.card-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  margin:20px 0;
+}
+.card-item{
+  width:24%;
+  margin: 5px auto;
+  padding:7px;
+  box-shadow: 1px 1px 6px rgb(227, 227, 227);
+  border:1px solid rgb(227, 227, 227);
+  border-radius: 4px;
+  display:flex;flex-direction: column;
+  justify-content:space-between;
+  background:white;
+}
+.card-item:hover{
+  cursor:pointer;
+}
+.card-desc{
+  display:flex;
+  justify-content:space-between;
+  margin:4px;
+}
+.left-content{
+  width: 80%;
+  overflow-wrap: break-word;
+}
+.grey-text{
+  color:grey;
+}
+.card-desc h5{
+  font-size:12px;
+ 
+}
+.card-item img{
+  width:100%;
+}
+.ReactModal__Overlay--after-open{
+  background:rgba(0, 0, 0, 0.468) !important; 
+}
+.button-wrapper{
+  display:flex;
+  justify-content:center;
+}
+.button-wrapper .btn{
+  padding:6px 8px;
+  border-radius: 2px;
+  margin:6px;
+}
+.button-wrapper .btn:hover{
+  cursor:pointer;
+}
+.cancel-btn{
+  color:rgb(58, 176, 164);
+  border:1px solid rgb(58, 176, 164);
+  background:white;
+}
+.comfirm-btn{
+  background:rgb(58, 176, 164);
+  color:white;
+  border:none;
+}
+.time-btn{
+  border:1px solid rgb(208, 210, 210);
+   background:white;
+}
+.modal-container{
+  padding:20px;
+  width:24%;
+  margin: 5px auto;
+  box-shadow: 1px 1px 6px rgb(227, 227, 227);
+  border:1px solid rgb(227, 227, 227);
+  border-radius: 4px;
+  display:flex;flex-direction: column;
+  justify-content:space-between;
+  background:white;
+}
+.modal-desc{
+  border-top:1px solid grey;
+  padding:20px;
+  margin-top:20px;
+}
+.modal-desc h5{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+

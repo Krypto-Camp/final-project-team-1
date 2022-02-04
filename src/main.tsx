@@ -1,31 +1,33 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import { providers } from 'ethers'
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { providers } from "ethers";
+import { Account, NetworkSwitcher, Profile } from "./components";
 
 // Imports
-import { Connector, Provider, chain, defaultChains } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
+import { Connector, Provider, chain, defaultChains } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
+import { WalletLinkConnector } from "wagmi/connectors/walletLink";
 
-import { App } from './App'
+import { App } from "./App";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // Get environment variables
 // const alchemy = import.meta.env.VITE_ALCHEMY_ID as string
 // const etherscan = import.meta.env.VITE_ETHERSCAN_API_KEY as string
-const infuraId = import.meta.env.VITE_INFURA_ID as string
+const infuraId = import.meta.env.VITE_INFURA_ID as string;
 
 // Pick chains
-const chains = [chain.hardhat, ...defaultChains]
-console.log(chains)
-const defaultChain = chain.mainnet
+const chains = [chain.hardhat, ...defaultChains];
+console.log(chains);
+const defaultChain = chain.mainnet;
 
 // Set up connectors
-type ConnectorsConfig = { chainId?: number }
+type ConnectorsConfig = { chainId?: number };
 const connectors = ({ chainId }: ConnectorsConfig) => {
   const rpcUrl =
     chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
-    defaultChain.rpcUrls[0]
+    defaultChain.rpcUrls[0];
   return [
     new InjectedConnector({ chains }),
     new WalletConnectConnector({
@@ -38,27 +40,32 @@ const connectors = ({ chainId }: ConnectorsConfig) => {
     new WalletLinkConnector({
       chains,
       options: {
-        appName: 'wagmi',
+        appName: "wagmi",
         jsonRpcUrl: `${rpcUrl}/${infuraId}`,
       },
     }),
-  ]
-}
+  ];
+};
 
 // Set up providers
-type ProviderConfig = { chainId?: number; connector?: Connector }
+type ProviderConfig = { chainId?: number; connector?: Connector };
 const isChainSupported = (chainId?: number) =>
-  chains.some((x) => x.id === chainId)
+  chains.some((x) => x.id === chainId);
 
 // Set up providers
-const provider = ({ chainId, connector }: ProviderConfig) => chainId == 31337 ? new providers.JsonRpcProvider(connector?.chains.find(x => x.id == 31337)?.rpcUrls[0]) : providers.getDefaultProvider(
-  isChainSupported(chainId) ? chainId : defaultChain.id,
-  {
-    // alchemy,
-    // etherscan,
-    infuraId,
-  },
-)
+const provider = ({ chainId, connector }: ProviderConfig) =>
+  chainId == 31337
+    ? new providers.JsonRpcProvider(
+        connector?.chains.find((x) => x.id == 31337)?.rpcUrls[0]
+      )
+    : providers.getDefaultProvider(
+        isChainSupported(chainId) ? chainId : defaultChain.id,
+        {
+          // alchemy,
+          // etherscan,
+          infuraId,
+        }
+      );
 // const webSocketProvider = ({ chainId }: ConnectorsConfig) =>
 //   isChainSupported(chainId)
 //     ? new providers.InfuraWebSocketProvider(chainId, infuraId)
@@ -72,8 +79,17 @@ ReactDOM.render(
       provider={provider}
       // webSocketProvider={webSocketProvider}
     >
-      <App />
+      <BrowserRouter>
+        <div className="header">
+          <Account />
+          <NetworkSwitcher />
+        </div>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root'),
-)
+  document.getElementById("root")
+);
