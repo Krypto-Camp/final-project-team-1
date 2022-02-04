@@ -1,6 +1,9 @@
 {
-  "name": "hardhat-project",
+  "name": "final-proect-team-1",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "chain": "npx hardhat node",
     "compile": "npx hardhat compile",
     "clean": "npx hardhat clean",
@@ -16,12 +19,27 @@
     "chai": "^4.3.4",
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.3",
-    "hardhat": "^2.8.2"
+    "hardhat": "^2.8.2",
+    "@types/react": "^17.0.33",
+    "@types/react-dom": "^17.0.10",
+    "@vitejs/plugin-react": "^1.0.7",
+    "typescript": "^4.4.4",
+    "vite": "^2.7.2"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.4.2",
     "@supercharge/filesystem": "^2.3.0",
     "dotenv": "^14.2.0",
-    "fs-extra": "^10.0.0"
+    "fs-extra": "^10.0.0",
+    "@ethersproject/units": "^5.5.0",
+    "@usedapp/core": "^0.9.0",
+    "buffer": "^6.0.3",
+    "ethers": "^5.5.1",
+    "events": "^3.3.0",
+    "process": "^0.11.10",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "util": "^0.12.4",
+    "wagmi": "^0.2.1"
   }
 }

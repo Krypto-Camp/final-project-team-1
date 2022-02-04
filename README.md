@@ -2,7 +2,7 @@
 # How To Start It? 🚀
 ```bash
 git clone git@github.com:Krypto-Camp/final-project-team-1.git
-cd final-project-team-1/backend
+cd final-project-team-1/
 node -v # 16.13.0
 npm install
 copy .env.example and rename to .env and paste ur infura project id, account private key # u can get private key from the metamask developer account u have created before.
@@ -11,29 +11,24 @@ npm i hardhat -g
 npm run clean # reset the env
 npm run chain # run localhost chain by hardhat, keep this process, don't close it
 npm run deploy:localhost # compile and deploy contracts to localhost chain
-cd ../frontend
-npm install
-.env.example -> .env and paste ur infura project id to VITE_INFURA_ID
 npm run dev
 ```
 
 #### 合約串接部分，可優先看 
-`frontend/src/components/GetContract.tsx`
+`src/components/GetContract.tsx`
 \
-`frontend/src/main.tsx`
+`src/main.tsx`
 
 #### 合約撰寫
 ```
-1. 於 backend/contract/ 新增合約
+1. 於 contract/ 新增合約
 2. 於 scripts/deploy.js 新增部屬方法 `deployContract()`
 3. npm run deploy:localhost or npm run deploy:rinkeby
-4. frontend/config/contracts.ts 引入合約 address 以及 abi json file
+4. config/contracts.ts 引入合約 address 以及 abi json file
 5. 仿造 getContract.tsx 串接
 ```
 
-## backend/
-
-**folder strcuture**
+### folder strcuture
 ```bash
 - address/ # generate contract address file by deploy.js，客製寫法，避免前端要在部屬合約後一直更新合約地址
 - artifacts/ # compiled contract here, use npm run clean to delete it.
@@ -47,6 +42,13 @@ npm run dev
 - test/ # testing contract by using ethers
 - hardhat.config.js # config 
 - .env # INFURA_PROJECT_ID, ACCOUNT_PRIVATE_KEY
+# 前端
+- src/
+  - components/
+    - GetContract.tsx # 如何操作合約參考
+  - configs/contract.ts # 這裡引入合約
+  - App.tsx
+  - main.tsx # 這裡引入 provider
 ```
 
 **scripts**
@@ -65,29 +67,6 @@ npm run deploy # deploy contracts on mainnet
 ```bash
 INFURA_PROJECT_ID='add_the_infura_project_id_here'
 ACCOUNT_PRIVATE_KEY='add_ur_own_metamask_develop_account_private_key_here'
-```
-
-
-### frontend/
-```bash
-- src/
-  - components/
-    - GetContract.tsx # 如何操作合約參考
-  - configs/contract.ts # 這裡引入合約
-  - App.tsx
-  - main.tsx # 這裡引入 provider
-```
-
-**scripts**
-```bash
-npm run dev
-```
-
-**.env**
-```bash
-# VITE_ALCHEMY_ID=
-# VITE_ETHERSCAN_API_KEY=
-VITE_INFURA_ID='09b48a01c3e346868af7d548799be03e'
 ```
 
 ### 部屬網站
