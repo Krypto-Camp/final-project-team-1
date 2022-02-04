@@ -1,7 +1,7 @@
-import AtomicToken from "../../../backend/artifacts/contracts/example/AtomicToken.sol/AtomicToken.json";
-import atomic_token_address from '../../../backend/address/AtomicToken.json' 
+import AtomicToken from "../../artifacts/contracts/example/AtomicToken.sol/AtomicToken.json";
+import atomic_token_address from '../../address/AtomicToken.json' 
 
-import baycAbi from "../../../backend/external/bayc.json"; // external contract
+import baycAbi from "../../external/bayc.json"; // external contract
 
 export const atomic_token = {
   address: atomic_token_address.address,
