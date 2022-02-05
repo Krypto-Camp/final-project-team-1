@@ -33,6 +33,7 @@ async function main() {
   const AtomicTokenContract = await deployContract('AtomicToken', [initSupply])
   const KryContract = await deployContract('KycContract', [])
   await deployContract('DuctionAuctionCrowdSale', [100, deployer, AtomicTokenContract.address, KryContract.address])
+  await deployContract('Market', [])
 
   console.log('done!')
   // const AtomicToken = await hre.ethers.getContractFactory("AtomicToken")
