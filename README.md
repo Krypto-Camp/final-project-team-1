@@ -1,19 +1,42 @@
+## 專案介紹 🚀
+![](https://i.imgur.com/beq79Kr.jpg)
+NFT Renting Platform
+- User can loan the NFT
+- User can borrow the NFT
 
-# How To Start It? 🚀
+
+## 安裝前準備
 ```bash
 git clone git@github.com:Krypto-Camp/final-project-team-1.git
 cd final-project-team-1/
 node -v # 16.13.0
+```
+
+## 安裝步驟
+```bash
 npm install
-copy .env.example and rename to .env and paste ur infura project id, account private key # u can get private key from the metamask developer account u have created before.
-# notice! if u didn't install hardhat global
+copy .env.example file and rename it to .env
 npm i hardhat -g
 npm run clean # reset the env
 npm run chain # run localhost chain by hardhat, keep this process, don't close it
 npm run deploy:localhost # compile and deploy contracts to localhost chain
 npm run dev
 ```
+## 部署/測試
+```bash
+npm run clean
+npm run deploy:rinkeby
+npm run dev
+```
 
+### 參考資料
+[Hardhat](https://hardhat.org/getting-started/)
+\
+[React Ethers Hook - Wagmi](https://wagmi-xyz.vercel.app/)
+\
+[Vite](https://cn.vitejs.dev/guide/#scaffolding-your-first-vite-project)
+
+## 其他補充
 #### 合約串接部分，可優先看 
 `src/components/GetContract.tsx`
 \
@@ -28,7 +51,7 @@ npm run dev
 5. 仿造 getContract.tsx 串接
 ```
 
-### folder strcuture
+### Folder Strcuture
 ```bash
 - address/ # generate contract address file by deploy.js，客製寫法，避免前端要在部屬合約後一直更新合約地址
 - artifacts/ # compiled contract here, use npm run clean to delete it.
@@ -73,10 +96,3 @@ ACCOUNT_PRIVATE_KEY='add_ur_own_metamask_develop_account_private_key_here'
 ```bash
 git push origin main # 已連動 github action, 部屬至 aws s3
 ```
-
-### 使用套件
-[Hardhat](https://hardhat.org/getting-started/)
-\
-[React Ethers Hook - Wagmi](https://wagmi-xyz.vercel.app/)
-\
-[Vite](https://cn.vitejs.dev/guide/#scaffolding-your-first-vite-project)
