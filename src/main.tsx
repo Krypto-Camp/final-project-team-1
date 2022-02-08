@@ -10,7 +10,7 @@ import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { WalletLinkConnector } from "wagmi/connectors/walletLink";
 
 import { App } from "./App";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 
 // Get environment variables
 // const alchemy = import.meta.env.VITE_ALCHEMY_ID as string
@@ -83,7 +83,11 @@ ReactDOM.render(
         <div className="header">
           <Account />
           <NetworkSwitcher />
+          <Link to="/profile?type=0">
+            <i className="fas fa-user-circle icon-font"></i>
+          </Link>
         </div>
+
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/profile" element={<Profile />} />

@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
+import { useProvider, useContractRead, useContractWrite } from "wagmi";
 import { useAccount } from "wagmi";
-import Modal from "react-modal";
+import { RentModal } from "../components/Modal";
 import { OPENSEADOMAIN } from "../constants";
+import { market_contract } from "../config/contract";
+import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
+  const navigate = useNavigate();
+  const provider = useProvider();
   const [{ data: accountData }] = useAccount({
     fetchEns: true,
   });
@@ -12,17 +17,64 @@ export const Profile = () => {
   const [type, setType] = useState("0");
   const [modalIsOpen, setIsOpen] = useState(false);
 
+  //取的用戶在opensea的所有NFT
+  const fetchMyNFT = () => {
+    fetch(`${OPENSEADOMAIN.TEST}/assets?owner=${accountData?.address}&limit=50`)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (myJson) {
+        setNftList(myJson.assets);
+        console.log(myJson.assets);
+      });
+  };
+
+  //取得所有NFT
+  const [{ data: item, error: errormarket }, fetchMarketItems] =
+    useContractRead(
+      {
+        addressOrName: market_contract.address,
+        contractInterface: market_contract.abi,
+        signerOrProvider: provider,
+      },
+      "fetchMarketItems"
+    );
+
+  console.log("item", item);
+
+  //取得所有個人頁：租賃中商品
+  const [{ data: myRentingItem }, fetchMyRentingItems] = useContractRead(
+    {
+      addressOrName: market_contract.address,
+      contractInterface: market_contract.abi,
+      signerOrProvider: provider,
+    },
+    "fetchMyRentingItems"
+  );
+
   useEffect(() => {
     if (accountData?.address)
-      fetch(`${OPENSEADOMAIN.TEST}/assets?owner=${accountData?.address}`)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (myJson) {
-          setNftList(myJson.assets);
-          console.log(myJson.assets);
-        });
-  }, [accountData?.address]);
+      switch (type) {
+        case "0":
+          fetchMyNFT();
+          break;
+        case "1":
+          fetchMarketItems();
+          //TODO:接item
+          setNftList([]);
+          break;
+        case "2":
+          fetchMyRentingItems();
+          //TODO:接myRentingItem
+          setNftList([]);
+          break;
+      }
+  }, [accountData?.address, type]);
+
+  const switchTab = (e: string) => {
+    setType(e);
+    navigate(`/profile?type=${e}`);
+  };
 
   const OnSelectNFT = (x: NFTObject) => {
     setCurretSelect(x);
@@ -33,70 +85,31 @@ export const Profile = () => {
     setIsOpen(false);
   };
 
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-      background: "transparent",
-      border: "none",
-    },
-  };
-
   return (
     <div className="container-profile">
       {/* 出租彈窗 */}
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        ariaHideApp={false}
-      >
-        <div className="modal-container" style={{ width: "300px" }}>
-          <img src={curretSelect?.image_url} />
-          <div className="modal-desc">
-            <div>
-              <h5 className="grey-text">{curretSelect?.name}</h5>
-              <h5>
-                {curretSelect?.collection?.name} #{curretSelect?.token_id}
-              </h5>
-              <h5
-                className="grey-text"
-                title={curretSelect?.asset_contract?.address}
-              >
-                {curretSelect?.asset_contract?.address}
-              </h5>
-            </div>
-          </div>
-          <div className="button-wrapper">
-            <button className="time-btn btn">1 day</button>
-            <button className="time-btn btn">1 week</button>
-            <button className="time-btn btn">1 month</button>
-          </div>
-          <div className="button-wrapper">
-            <button onClick={() => setIsOpen(false)} className="cancel-btn btn">
-              Cancel
-            </button>
-            <button className="comfirm-btn btn">Comfirm</button>
-          </div>
-        </div>
-      </Modal>
+      <RentModal modalIsOpen={modalIsOpen} closeModal={closeModal} />
       {/* 切換tabs */}
       <div className="type-tap-container">
-        <h4 onClick={() => setType("0")} className={type == "0" ? "focus" : ""}>
+        <h4
+          onClick={() => switchTab("0")}
+          className={type == "0" ? "focus" : ""}
+        >
           擁有的
         </h4>
-        <h4 onClick={() => setType("1")} className={type == "1" ? "focus" : ""}>
+        <h4
+          onClick={() => switchTab("1")}
+          className={type == "1" ? "focus" : ""}
+        >
           出租中
         </h4>
-        <h4 onClick={() => setType("2")} className={type == "2" ? "focus" : ""}>
+        <h4
+          onClick={() => switchTab("2")}
+          className={type == "2" ? "focus" : ""}
+        >
           租賃中
         </h4>
       </div>
-      <div>My NFT</div>
       {/* NFT列表 */}
       <div className="card-wrapper">
         {nftList.map((x: any) => (
