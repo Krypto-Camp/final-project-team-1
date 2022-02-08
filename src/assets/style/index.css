@@ -6,6 +6,7 @@
 
 .header {
   display: flex;
+  height: 64px;
   margin-right: 1rem;
   background-color: #333;
   color: #fff;

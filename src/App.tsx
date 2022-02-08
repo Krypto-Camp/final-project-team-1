@@ -16,5 +16,5 @@ export const App = () => {
       </>
     );
 
-  return <Connect />;
+  return <div className="container"><Connect /></div>;
 };
