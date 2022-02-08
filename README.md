@@ -92,6 +92,7 @@ npm run deploy # deploy contracts on mainnet
 ```bash
 INFURA_PROJECT_ID='add_the_infura_project_id_here'
 ACCOUNT_PRIVATE_KEY='add_ur_own_metamask_develop_account_private_key_here'
+VITE_INFURA_ID='add_the_infura_project_id_here'
 ```
 
 ### 部屬網站
