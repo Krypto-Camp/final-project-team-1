@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-modal";
-import { useProvider, useContractWrite } from "wagmi";
-import { market_contract } from "../config/contract";
+import { useProvider, useContractWrite, useContract, useSigner } from "wagmi";
+import { market_contract, ERC721_contract } from "../config/contract";
 
-export const RentModal = (props: any) => {
+export const CreateModal = (props: any) => {
   const seconds = {
     ADAY: "86400",
     AWEEK: "604800",
@@ -24,7 +24,7 @@ export const RentModal = (props: any) => {
   };
 
   const provider = useProvider();
-
+  const [{ data: signer }] = useSigner();
   const curretSelect = props.curretSelect;
   const [validTime, setValidTime] = useState(seconds.ADAY);
   const [price, setPrice] = useState("");
@@ -39,7 +39,19 @@ export const RentModal = (props: any) => {
     "createMarketItem"
   );
 
+  const nftContract = useContract({
+    addressOrName: curretSelect?.asset_contract?.address,
+    contractInterface: ERC721_contract.abi,
+    signerOrProvider: signer,
+  });
+
   const create = async () => {
+    let approveTransaction = await nftContract.approve(
+      market_contract.address,
+      Number(curretSelect?.token_id)
+    );
+    await approveTransaction.wait();
+
     const result = await createMarketItem({
       args: [
         curretSelect?.asset_contract?.address, //nftContract
@@ -51,13 +63,13 @@ export const RentModal = (props: any) => {
       overrides: {
         gasLimit: 2030000,
         gasPrice: 60000000000,
-        value: 1000,
       },
     });
     console.log("createresult", result);
     console.log(
       `input price:${price},deposit:${deposit},validTime:${validTime}`
     );
+    props.setIsOpen(false);
   };
 
   return (

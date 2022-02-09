@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useProvider, useContractRead, useContractWrite } from "wagmi";
 import { useAccount } from "wagmi";
-import { RentModal } from "../components/Modal";
+import { CreateModal } from "./CreateModal";
 import { OPENSEADOMAIN } from "../constants";
 import { market_contract } from "../config/contract";
 import { useNavigate } from "react-router-dom";
@@ -42,6 +42,32 @@ export const Profile = () => {
 
   console.log("item", item);
 
+  const [{}, getMarketItem] = useContractWrite(
+    {
+      addressOrName: market_contract.address,
+      contractInterface: market_contract.abi,
+      signerOrProvider: provider,
+    },
+    "getMarketItem"
+  );
+
+  const test = async () => {
+    const result = await getMarketItem({
+      args: [1],
+    });
+    console.log("getMarketItem", result);
+  };
+
+  //取得所有個人頁：租賃中商品
+  const [{ data: myMarketItem }, fetchMyMarketItems] = useContractRead(
+    {
+      addressOrName: market_contract.address,
+      contractInterface: market_contract.abi,
+      signerOrProvider: provider,
+    },
+    "fetchMyMarketItems"
+  );
+
   //取得所有個人頁：租賃中商品
   const [{ data: myRentingItem }, fetchMyRentingItems] = useContractRead(
     {
@@ -59,13 +85,18 @@ export const Profile = () => {
           fetchMyNFT();
           break;
         case "1":
-          fetchMarketItems();
+          fetchMyMarketItems();
           //TODO:接item
           setNftList([]);
           break;
         case "2":
           fetchMyRentingItems();
           //TODO:接myRentingItem
+          setNftList([]);
+          break;
+        case "3":
+          fetchMarketItems();
+          //TODO:接myMarketItem
           setNftList([]);
           break;
       }
@@ -88,7 +119,15 @@ export const Profile = () => {
   return (
     <div className="container-profile">
       {/* 出租彈窗 */}
-      <RentModal modalIsOpen={modalIsOpen} closeModal={closeModal} />
+      <button onClick={test}>getMarketItem</button>
+      {modalIsOpen && (
+        <CreateModal
+          modalIsOpen={modalIsOpen}
+          setIsOpen={setIsOpen}
+          closeModal={closeModal}
+          curretSelect={curretSelect}
+        />
+      )}
       {/* 切換tabs */}
       <div className="type-tap-container">
         <h4
@@ -108,6 +147,12 @@ export const Profile = () => {
           className={type == "2" ? "focus" : ""}
         >
           租賃中
+        </h4>
+        <h4
+          onClick={() => switchTab("3")}
+          className={type == "3" ? "focus" : ""}
+        >
+          平台NFT
         </h4>
       </div>
       {/* NFT列表 */}
