@@ -11,7 +11,6 @@ contract Market is ReentrancyGuard {
     Counters.Counter private _itemsSold;
 
     address payable owner;
-    // uint256 listingPrice = 1 ether; // 上架費用
 
     struct MarketItem {
         uint256 itemId;
@@ -22,9 +21,10 @@ contract Market is ReentrancyGuard {
         uint256 price; // 出租金額
         uint256 deposit; // 押金
         uint256 validTime; // 出租時間
+        uint256 rentStart; // 開始租賃日期 blocktime
+        uint256 rentEnd; // 是否歸還
     }
 
-    // mapping(string => Item) items;
     mapping(uint256 => MarketItem) private idToMarketItem;
 
     event MarketItemCreated(
@@ -35,7 +35,9 @@ contract Market is ReentrancyGuard {
         address renter,
         uint256 price,
         uint256 deposit,
-        uint256 validTime
+        uint256 validTime,
+        uint256 rentStart,
+        uint256 rentEnd
     );
 
     // 上架
@@ -45,7 +47,7 @@ contract Market is ReentrancyGuard {
         uint256 price,
         uint256 deposit,
         uint256 validTime
-    ) public payable nonReentrant {
+    ) public nonReentrant {
         require(price > 0, "Price must be at least 1 wei");
 
         _itemIds.increment();
@@ -59,7 +61,9 @@ contract Market is ReentrancyGuard {
             payable(address(0)),
             price,
             deposit,
-            validTime
+            validTime,
+            0,
+            0
         );
 
         IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
@@ -72,7 +76,9 @@ contract Market is ReentrancyGuard {
             address(0),
             price,
             deposit,
-            validTime
+            validTime,
+            0,
+            0
         );
     }
 
@@ -86,20 +92,39 @@ contract Market is ReentrancyGuard {
         uint256 deposit = idToMarketItem[itemId].deposit;
         uint256 tokenId = idToMarketItem[itemId].tokenId;
         require(
-            msg.value == price + deposit,
+            msg.value >= price + deposit,
             "Please submit the asking price in order to complete the purchase"
         );
 
-        payable(owner).transfer(deposit);
         idToMarketItem[itemId].lender.transfer(price);
+
         IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
 
         idToMarketItem[itemId].renter = payable(msg.sender);
+        idToMarketItem[itemId].rentStart = block.timestamp;
         _itemsSold.increment();
     }
 
     // 歸還
-    // function returnMarketItem() public {}
+    function returnMarketItem(uint256 itemId) public payable {
+        uint256 deposit = idToMarketItem[itemId].deposit;
+        uint256 tokenId = idToMarketItem[itemId].tokenId;
+        address nftContract = idToMarketItem[itemId].nftContract;
+
+        idToMarketItem[itemId].rentEnd = block.timestamp;
+
+        payable(msg.sender).transfer(deposit);
+        IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
+    }
+
+    // 要回押金
+    function getDeposit(uint256 itemId) public payable {
+        uint256 deposit = idToMarketItem[itemId].deposit;
+        address lender = idToMarketItem[itemId].lender;
+        require(msg.sender == lender, "The owner of the NFT not match!");
+        // TODO: 時間檢查、未歸還檢查
+        payable(msg.sender).transfer(deposit);
+    }
 
     function getMarketItem(uint256 marketItemId)
         public
