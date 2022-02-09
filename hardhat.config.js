@@ -32,7 +32,7 @@ module.exports = {
     },
     rinkeby: {
       url: `https://rinkeby.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
-      accounts: [process.env.ACCOUNT_PRIVATE_KEY || ''],
+      accounts: [process.env.ACCOUNT_PRIVATE_KEY, process.env.KEY2],
       gas: 2100000,
       gasPrice: 8000000000,
     },

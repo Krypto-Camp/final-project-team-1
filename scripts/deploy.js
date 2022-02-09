@@ -28,6 +28,8 @@ const deployContract = async (name, params = []) => {
 async function main() {
   const deployers = await ethers.getSigners();
   const deployer = deployers[0].address
+  console.log(deployers, 'deployers')
+  return
   // We get the contract to deploy
   const initSupply = 5000 * 10 ** 4;
   const AtomicTokenContract = await deployContract('AtomicToken', [initSupply])
