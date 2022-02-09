@@ -106,7 +106,7 @@ contract Market is ReentrancyGuard {
     }
 
     // 歸還
-    function returnMarketItem(uint256 itemId) public payable {
+    function returnMarketItem(uint256 itemId) public {
         uint256 deposit = idToMarketItem[itemId].deposit;
         uint256 tokenId = idToMarketItem[itemId].tokenId;
         address nftContract = idToMarketItem[itemId].nftContract;
@@ -118,7 +118,7 @@ contract Market is ReentrancyGuard {
     }
 
     // 要回押金
-    function getDeposit(uint256 itemId) public payable {
+    function getDeposit(uint256 itemId) public {
         uint256 deposit = idToMarketItem[itemId].deposit;
         address lender = idToMarketItem[itemId].lender;
         require(msg.sender == lender, "The owner of the NFT not match!");
@@ -154,12 +154,50 @@ contract Market is ReentrancyGuard {
     }
 
     // 個人頁：上架商品
-    function fetchMyMarketItems() public pure returns (string memory) {
-        return "upcoming";
+    // FIXME:
+    function fetchMyMarketItems(address userAddr)
+        public
+        view
+        returns (MarketItem[] memory)
+    {
+        uint256 itemCount = _itemIds.current();
+        uint256 unsoldItemCount = _itemIds.current() - _itemsSold.current();
+        uint256 currentIndex = 0;
+
+        MarketItem[] memory items = new MarketItem[](unsoldItemCount);
+        for (uint256 i = 0; i < itemCount; i++) {
+            if (idToMarketItem[i + 1].lender == userAddr) {
+                uint256 currentId = i + 1;
+                MarketItem storage currentItem = idToMarketItem[currentId];
+                items[currentIndex] = currentItem;
+                currentIndex += 1;
+            }
+        }
+
+        return items;
     }
 
     // 個人頁：租賃中商品
-    function fetchMyRentingItems() public pure returns (string memory) {
-        return "upcoming";
+    // FIXME:
+    function fetchMyRentingItems(address userAddr)
+        public
+        view
+        returns (MarketItem[] memory)
+    {
+        uint256 itemCount = _itemIds.current();
+        uint256 itemSold = _itemsSold.current();
+        uint256 currentIndex = 0;
+
+        MarketItem[] memory items = new MarketItem[](itemSold);
+        for (uint256 i = 0; i < itemCount; i++) {
+            if (idToMarketItem[i + 1].renter == userAddr) {
+                uint256 currentId = i + 1;
+                MarketItem storage currentItem = idToMarketItem[currentId];
+                items[currentIndex] = currentItem;
+                currentIndex += 1;
+            }
+        }
+
+        return items;
     }
 }
