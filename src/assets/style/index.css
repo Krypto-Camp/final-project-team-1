@@ -47,7 +47,7 @@
 }
 .card-item{
   width:24%;
-  margin: 5px auto;
+  margin: 5px;
   padding:7px;
   box-shadow: 1px 1px 6px rgb(227, 227, 227);
   border:1px solid rgb(227, 227, 227);
@@ -128,4 +128,15 @@
   overflow: hidden;
   white-space: nowrap;
 }
-
+.input-wrapper{
+  display:flex;
+  margin:5px;
+}
+.icon-font{
+  font-size:30px;
+  padding:5px;
+  color:white;
+}
+.icon-font:hover{
+  filter:brightness(.6);
+}
