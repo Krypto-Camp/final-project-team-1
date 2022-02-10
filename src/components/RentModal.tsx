@@ -43,13 +43,13 @@ export const RentModal = (props: any) => {
   const rent = async () => {
     const result = await rentMarketItem({
       args: [
-        curretSelect?.asset_contract?.address, //nftContract
-        curretSelect?.token_id, //itemId
+        curretSelect?.nftContract, //nftContract
+        curretSelect?.itemId, //itemId
       ],
       overrides: {
         gasLimit: 2030000,
         gasPrice: 60000000000,
-        value: 0,
+        value: 1000,
       },
     });
     console.log("rentMarketItem", result);
@@ -69,19 +69,16 @@ export const RentModal = (props: any) => {
           <div>
             <h5 className="grey-text">{curretSelect?.name}</h5>
             <h5>
-              {curretSelect?.collection?.name} #{curretSelect?.token_id}
+              {curretSelect?.collection} #{curretSelect?.token_id}
             </h5>
-            <h5
-              className="grey-text"
-              title={curretSelect?.asset_contract?.address}
-            >
-              {curretSelect?.asset_contract?.address}
+            <h5 className="grey-text" title={curretSelect?.nftContract}>
+              {curretSelect?.nftContract}
             </h5>
           </div>
         </div>
         <div>
-          <h5>from:{data.rentStart}</h5>
-          <h5>to:{data.rentEnd}</h5>
+          <h5>from:{curretSelect.rentStart}</h5>
+          <h5>to:{curretSelect.rentEnd}</h5>
         </div>
 
         <div className="button-wrapper">
