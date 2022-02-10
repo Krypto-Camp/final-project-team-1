@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { providers } from "ethers";
-import { Header, Profile } from "./components";
+import { Header, Profile, Footer } from "./components";
 
 // Imports
 import { Connector, Provider, chain, defaultChains } from "wagmi";
@@ -10,7 +10,7 @@ import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { WalletLinkConnector } from "wagmi/connectors/walletLink";
 
 import { App } from "./App";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 
 // Get environment variables
 // const alchemy = import.meta.env.VITE_ALCHEMY_ID as string
@@ -81,10 +81,13 @@ ReactDOM.render(
     >
       <BrowserRouter>
         <Header />
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
+        <div className="bg-container">
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+          <Footer />
+        </div>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

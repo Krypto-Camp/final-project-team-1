@@ -17,7 +17,7 @@ const deployContract = async (name, params = []) => {
   // genderate file
   try {
     await Fs.ensureFile(`./address/${name}.json`)
-    await Fs.writeFile(`./address/${name}.json`, JSON.stringify({address: contract.address}, null, 2));
+    await Fs.writeFile(`./address/${name}.json`, JSON.stringify({ address: contract.address }, null, 2));
     console.log(`update contract address to ../address/${name}.json`);
   } catch (e) {
     console.log(e)
@@ -36,7 +36,6 @@ async function main() {
   const KryContract = await deployContract('KycContract', [])
   await deployContract('DuctionAuctionCrowdSale', [100, deployer, AtomicTokenContract.address, KryContract.address])
   await deployContract('Market', [])
-
   console.log('done!')
   // const AtomicToken = await hre.ethers.getContractFactory("AtomicToken")
   // const dAtomicToken = await AtomicToken.deploy(initSupply)
