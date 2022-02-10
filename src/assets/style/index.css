@@ -129,3 +129,9 @@
   white-space: nowrap;
 }
 
+
+
+.switcher {
+  position: absolute;
+  right: 0;
+}

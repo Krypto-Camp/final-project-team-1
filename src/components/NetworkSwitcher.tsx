@@ -6,7 +6,7 @@ export const NetworkSwitcher = () => {
     useNetwork()
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="switcher" style={{ display: 'flex' }}>
       <div style={{ marginRight: '1rem' }}>
         當前 <span style={{color: 'red'}}>
           {networkData.chain?.name ?? networkData.chain?.id}{' '}
@@ -15,7 +15,7 @@ export const NetworkSwitcher = () => {
       </div>
 
       {switchNetwork &&
-        networkData.chains.map((x) =>
+        networkData.chains.filter(n => n.name == 'hardhat' || n.name == 'Rinkeby').map((x) =>
           x.id === networkData.chain?.id ? null : (
             <button key={x.id} onClick={() => switchNetwork(x.id)}>
               Switch to {x.name}

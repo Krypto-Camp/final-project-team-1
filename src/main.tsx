@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { providers } from "ethers";
-import { Account, NetworkSwitcher, Profile } from "./components";
+import { Header, Profile } from "./components";
 
 // Imports
 import { Connector, Provider, chain, defaultChains } from "wagmi";
@@ -56,16 +56,16 @@ const isChainSupported = (chainId?: number) =>
 const provider = ({ chainId, connector }: ProviderConfig) =>
   chainId == 31337
     ? new providers.JsonRpcProvider(
-        connector?.chains.find((x) => x.id == 31337)?.rpcUrls[0]
-      )
+      connector?.chains.find((x) => x.id == 31337)?.rpcUrls[0]
+    )
     : providers.getDefaultProvider(
-        isChainSupported(chainId) ? chainId : defaultChain.id,
-        {
-          // alchemy,
-          // etherscan,
-          infuraId,
-        }
-      );
+      isChainSupported(chainId) ? chainId : defaultChain.id,
+      {
+        // alchemy,
+        // etherscan,
+        infuraId,
+      }
+    );
 // const webSocketProvider = ({ chainId }: ConnectorsConfig) =>
 //   isChainSupported(chainId)
 //     ? new providers.InfuraWebSocketProvider(chainId, infuraId)
@@ -77,13 +77,10 @@ ReactDOM.render(
       autoConnect
       connectors={connectors}
       provider={provider}
-      // webSocketProvider={webSocketProvider}
+    // webSocketProvider={webSocketProvider}
     >
       <BrowserRouter>
-        <div className="header">
-          <Account />
-          <NetworkSwitcher />
-        </div>
+        <Header />
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/profile" element={<Profile />} />
