@@ -119,7 +119,7 @@ export const Profile = () => {
   return (
     <div className="container-profile">
       {/* 出租彈窗 */}
-      <button onClick={test}>getMarketItem</button>
+      {/* <button onClick={test}>getMarketItem</button> */}
       {modalIsOpen && (
         <CreateModal
           modalIsOpen={modalIsOpen}
@@ -157,7 +157,7 @@ export const Profile = () => {
       </div>
       {/* NFT列表 */}
       <div className="card-wrapper">
-        {nftList.map((x: any) => (
+        {nftList.length > 0 ? nftList.map((x: any) => (
           <div key={x?.id} className="card-item" onClick={() => OnSelectNFT(x)}>
             <img src={x?.image_url} />
             <div className="card-desc">
@@ -174,7 +174,9 @@ export const Profile = () => {
               </div>
             </div>
           </div>
-        ))}
+        )) : (
+          <div className="empty-hint">暫無資料</div>
+        )}
       </div>
     </div>
   );

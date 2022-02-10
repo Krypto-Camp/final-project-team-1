@@ -53,7 +53,7 @@ export const Section3 = () => {
         <div className="flex-as flex-jb wrap">
           {
             members.map(member => (
-              <div className="card flex-ac">
+              <div className="card flex-ac" key={member.name}>
                 <div className="card-avatar">
                   <img src={member.avatar} alt="" />
                 </div>

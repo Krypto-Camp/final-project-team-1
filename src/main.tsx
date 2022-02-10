@@ -86,7 +86,7 @@ ReactDOM.render(
             <Route path="/" element={<App />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </BrowserRouter>
     </Provider>

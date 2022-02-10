@@ -5,7 +5,7 @@ import { Connect } from '../components'
 import logo from '../assets/imgs/logo_w.png'
 
 export const Header = () => {
-  const [{ data: accountData }] = useAccount();
+  const [{ data: accountData }, disconnect] = useAccount();
   return (
     <div className="header">
       <Link className="logo" to="/">
@@ -14,10 +14,15 @@ export const Header = () => {
       <div className="right">
         {
           !accountData?.address ?
-            <Connect /> : <Link className="user-page-link" to="/profile?type=0">
-              <i className="fas fa-user-circle icon-font"></i>
-              個人中心 Hello，{accountData?.address}
-            </Link>
+            <Connect /> : <div className="flex-ac">
+              <Link className="user-page-link" to="/profile?type=0">
+                <i className="fas fa-user-circle icon-font"></i>
+                個人中心 Hello，{accountData?.address}
+              </Link>
+              <div className="connect-btn" onClick={() => disconnect()}>
+                登出
+              </div>
+            </div>
         }
 
       </div>
