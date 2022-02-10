@@ -251,17 +251,17 @@
 
 .nft-img1 {
   @include img_l_pc(250, 100, 150);
-  animation: hideshow 3.5s 1s ease-in-out infinite alternate;
+  // animation: hideshow 3.5s 1s ease-in-out infinite alternate;
 }
 
 .nft-img2 {
   @include img_r_pc(240, 100, 550);
-  animation: hideshow 3.5s 2s ease-in-out infinite alternate;
+  // animation: hideshow 3.5s 2s ease-in-out infinite alternate;
 }
 
 .nft-img3 {
   @include img_r_pc(180, 700, 150);
-  animation: hideshow 6.5s 1s ease-in-out infinite alternate;
+  // animation: hideshow 6.5s 1s ease-in-out infinite alternate;
 }
 
 @keyframes hideshow {
