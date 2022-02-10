@@ -50,7 +50,8 @@ export const Section4 = () => {
               Q2  2022
             </div>
             <div className="item-content">
-              → Coming Soon ...
+              → 質押NFT獲取Token 獎勵功能開發
+              → Coming soon
             </div>
           </div>
         </div>

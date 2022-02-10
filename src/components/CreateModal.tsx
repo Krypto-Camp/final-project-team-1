@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { useProvider, useContractWrite, useContract, useSigner } from "wagmi";
-import { market_contract, ERC721_contract } from "../config/contract";
+import { market_contract, ERC721_contract, rentrent_token } from "../config/contract";
 
 export const CreateModal = (props: any) => {
   const seconds = {
@@ -39,6 +39,8 @@ export const CreateModal = (props: any) => {
     "createMarketItem"
   );
 
+  
+
   const nftContract = useContract({
     addressOrName: curretSelect?.asset_contract?.address,
     contractInterface: ERC721_contract.abi,
@@ -52,12 +54,16 @@ export const CreateModal = (props: any) => {
     );
     await approveTransaction.wait();
 
+    let ethprice = Number(price) * 1000000000000000000
+    let ethdeposit = Number(deposit) * 1000000000000000000
+    console.log(ethprice, ethdeposit, 'ethttertee')
+
     const result = await createMarketItem({
       args: [
         curretSelect?.asset_contract?.address, //nftContract
         curretSelect?.token_id, //tokenId
-        price, //租金
-        deposit, //押金
+        ethprice, //租金
+        ethdeposit, //押金
         validTime, //秒, validTime
       ],
       overrides: {
@@ -65,6 +71,7 @@ export const CreateModal = (props: any) => {
         gasPrice: 60000000000,
       },
     });
+
     console.log("createresult", result);
     console.log(
       `input price:${price},deposit:${deposit},validTime:${validTime}`
@@ -97,11 +104,11 @@ export const CreateModal = (props: any) => {
         </div>
 
         <div className="input-wrapper">
-          <h5>租金：</h5>
+          <h5>租金(eth)：</h5>
           <input type="number" onChange={(e) => setPrice(e.target.value)} />
         </div>
         <div className="input-wrapper">
-          <h5>押金：</h5>
+          <h5>押金(eth)：</h5>
           <input type="number" onChange={(e) => setDeposit(e.target.value)} />
         </div>
 

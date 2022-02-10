@@ -264,6 +264,17 @@
   animation: hideshow 6.5s 1s ease-in-out infinite alternate;
 }
 
+.white-paper-link {
+  color: #fff;
+  background-color: #fe1643;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-left: 2rem;
+  display: inline-block;
+  text-decoration: none;
+}
+
 @keyframes hideshow {
   to {
     opacity: 0;

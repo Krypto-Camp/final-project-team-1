@@ -1,5 +1,5 @@
 ## Rent Rent - The Best NFT Renting Platform 🚀
-![](https://i.imgur.com/beq79Kr.jpg)
+![](https://i.imgur.com/XOBjst3.png)
 
 - User can loan the NFT
 - User can borrow the NFT

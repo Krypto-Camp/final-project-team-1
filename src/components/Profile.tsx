@@ -126,6 +126,7 @@ export const Profile = () => {
           setIsOpen={setIsOpen}
           closeModal={closeModal}
           curretSelect={curretSelect}
+          sender={accountData?.address}
         />
       )}
       {/* 切換tabs */}

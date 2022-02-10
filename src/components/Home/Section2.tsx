@@ -6,13 +6,15 @@ export const Section2 = () => {
   return (
     <div className="section2 flex-c wrap">
       <div className="content">
-        <div className="section-title">
+        <div className="section-title flex-ac">
           <div className="label">
             TOKENOMICS
           </div>
           <span>貨幣經濟</span>
+          <a href="https://www.notion.so/Rent-Rent-b5460a595b804921b48189dedba940e7" className="white-paper-link" target="_blank">白皮書連結</a>
         </div>
         <img src={tokenomic} alt="" className="tokenomic" />
+
         <div className="flex-as flex-jb">
           <div style={{ width: '50%' }}>
             <div className="content-title">

@@ -1,6 +1,8 @@
 import AtomicToken from "../../artifacts/contracts/example/AtomicToken.sol/AtomicToken.json";
 import atomic_token_address from '../../address/AtomicToken.json' 
 
+import rentrent_token_address from '../../address/RentRentToken.json'
+
 import baycAbi from "../../external/bayc.json"; // external contract
 import nftAbi from "../../external/nft.json";
 
@@ -9,6 +11,11 @@ import market_contract_address from '../../address/Market.json'
 
 export const atomic_token = {
   address: atomic_token_address.address,
+  abi: AtomicToken.abi,
+};
+
+export const rentrent_token = {
+  address: rentrent_token_address.address,
   abi: AtomicToken.abi,
 };
 
