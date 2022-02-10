@@ -1,0 +1,138 @@
+@function size($size) {
+  $c-size: 100vw * $size / 1920;
+  @return #{$c-size};
+}
+@function size-m($size) {
+  $c-size: 100vw * $size / 375;
+  @return #{$c-size};
+}
+@function sizem($size) {
+  $c-size: 100vw * $size / 375;
+  @return #{$c-size};
+}
+
+@mixin xl {
+  @media screen and (min-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin div_r_pc($width, $height, $top, $right) {
+  position: absolute;
+  width: size($width);
+  height: size($height);
+  top: size($top);
+  right: size($right);
+  left: auto;
+}
+
+@mixin div_l_pc($width, $height, $top, $left) {
+  position: absolute;
+  width: size($width);
+  height: size($height);
+  top: size($top);
+  left: size($left);
+  right: auto;
+}
+
+@mixin div_r_m($width, $height, $top, $right) {
+  position: absolute;
+  width: sizem($width);
+  height: sizem($height);
+  top: sizem($top);
+  right: sizem($right);
+  left: auto;
+}
+
+@mixin div_l_m($width, $height, $top, $left) {
+  position: absolute;
+  width: sizem($width);
+  height: sizem($height);
+  top: sizem($top);
+  left: sizem($left);
+  right: auto;
+}
+
+@mixin img_r_pc($width, $top, $right) {
+  position: absolute;
+  width: size($width);
+  top: size($top);
+  right: size($right);
+  left: auto;
+}
+
+@mixin img_r_m($width, $top, $right) {
+  position: absolute;
+  width: sizem($width);
+  top: sizem($top);
+  right: sizem($right);
+  left: auto;
+}
+
+@mixin img_l_pc($width, $top, $left) {
+  position: absolute;
+  width: size($width);
+  top: size($top);
+  left: size($left);
+  right: auto;
+}
+@mixin img_c($width, $top, $left) {
+  position: absolute;
+  width: size($width);
+  top: $top;
+  left: $left;
+  right: auto;
+  margin: 0 auto;
+}
+
+@mixin img_c_pc($width, $top) {
+  position: absolute;
+  width: size($width);
+  top: size($top);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+@mixin div_c_pc($width, $height, $top) {
+  position: absolute;
+  width: size($width);
+  height: size($height);
+  top: size($top);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+@mixin img_c_m($width, $top) {
+  position: absolute;
+  width: sizem($width);
+  top: sizem($top);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+@mixin div_c_m($width, $height, $top) {
+  position: absolute;
+  width: sizem($width);
+  height: sizem($height);
+  top: sizem($top);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+@mixin img_l_m($width, $top, $left) {
+  position: absolute;
+  width: sizem($width);
+  top: sizem($top);
+  left: sizem($left);
+  right: auto;
+}

@@ -13,13 +13,13 @@ export const Connect = () => {
 
   return (
     <div>
-      <div>
+      <div className="btns">
         {connectors.map((x) => (
-          <button disabled={!x.ready} key={x.name} onClick={() => connect(x)}>
+          <div className="connect-btn" disabled={!x.ready} key={x.name} onClick={() => connect(x)}>
             {x.name}
             {!x.ready && ' (unsupported)'}
             {loading && x.name === connector?.name && '…'}
-          </button>
+          </div>
         ))}
       </div>
       <div>{error && (error?.message ?? 'Failed to connect')}</div>

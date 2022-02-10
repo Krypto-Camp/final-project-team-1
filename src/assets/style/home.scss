@@ -1,0 +1,275 @@
+@import "./function.scss";
+.section1 {
+  width: 100%;
+  height: 100vh;
+  align-content: center;
+
+  .section1-title {
+    width: 100%;
+    text-align: center;
+    font-size: size(56);
+    font-weight: bolder;
+    color: #fff;
+    margin-bottom: size(64);
+    display: flex;
+    justify-content: center;
+
+    span {
+      animation: neon1 1.5s 1s ease-in-out infinite alternate;
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  .section1-subtitle {
+    width: 100%;
+    font-size: size(28);
+    text-align: center;
+    margin-bottom: size(64);
+    letter-spacing: 2px;
+    color: #eee;
+    line-height: 1.4;
+  }
+  .section1-btns {
+    width: size(550);
+    margin: 0 auto;
+  }
+}
+
+.section2,
+.section3,
+.section4,
+.section5 {
+  width: 100%;
+  height: auto;
+  // background-color: #fff;
+  padding: size(60) 0;
+}
+
+.section3 {
+  width: 100%;
+  height: auto;
+  // background-color: #fff;
+  padding: size(60) 0;
+}
+
+.btn-default {
+  font-size: size(24);
+  color: #fff;
+  border-radius: 50px / 50px;
+  padding: size(24) size(40);
+  box-shadow: 0 0 0 2px #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    color: #000;
+    background-color: #fff;
+  }
+}
+
+.btn-primary {
+  font-size: size(24);
+  color: #fff;
+  font-weight: bold;
+  background-color: #fe1643;
+  border-radius: 50px / 50px;
+  padding: size(24) size(40);
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #b10b2c;
+  }
+}
+
+.rocket {
+  display: block;
+  margin-left: 10px;
+  animation: move 0.5s 1s ease-in-out infinite alternate;
+}
+
+@keyframes move {
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+.section-title {
+  width: 100%;
+  text-align: left;
+  font-size: size(56);
+  font-weight: bolder;
+  color: #fff;
+  margin-bottom: size(94);
+  position: relative;
+  span {
+    letter-spacing: 5px;
+    // border-bottom: 5px solid #fe1643;
+  }
+
+  // span {
+  //   animation: neon1 1.5s 1s ease-in-out infinite alternate;
+  //   display: inline-block;
+  //   margin-right: 5px;
+  // }
+
+  .label {
+    position: absolute;
+    left: size(5);
+    top: size(-42);
+    font-size: size(24);
+    color: #fe1643;
+    font-weight: 400;
+    letter-spacing: 2px;
+  }
+}
+
+.content {
+  width: size(1400);
+  margin: 0 auto;
+
+  img {
+    width: 100%;
+    margin-bottom: size(60);
+  }
+
+  .content-title {
+    font-size: size(32);
+    color: #fff;
+    margin-bottom: size(30);
+  }
+
+  .content-desc {
+    font-size: size(24);
+    color: #eee;
+    line-height: 1.5;
+
+    strong {
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+}
+
+.card {
+  width: 32%;
+  padding: size(40) size(30);
+  background-color: #252229;
+  margin-bottom: size(25);
+  border-radius: 15px;
+
+  &:hover {
+    .card-avatar img {
+      filter: grayscale(0);
+    }
+  }
+
+  .card-avatar {
+    width: size(100);
+    height: size(100);
+    margin-right: size(30);
+    border-radius: 999px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.5s;
+      filter: grayscale(1);
+    }
+  }
+
+  .card-name {
+    color: #fff;
+    font-size: size(24);
+    margin-bottom: size(12);
+  }
+
+  .card-content {
+    color: #eee;
+    line-height: 1.5;
+  }
+}
+
+.roadmap {
+  .roadmap-item {
+    width: 25%;
+    height: size(320);
+    // background-color: #252229;
+  }
+
+  .item-bar {
+    width: 100%;
+    height: size(45);
+    background: linear-gradient(90deg, rgba(254, 23, 67, 0), #fe1743);
+    margin-bottom: size(20);
+  }
+
+  .item-date {
+    font-size: size(48);
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: size(20);
+    padding-left: size(20);
+  }
+  
+  .item-content {
+    font-size: size(24);
+    color: #eee;
+    line-height: 1.5;
+    padding-left: size(20);
+  }
+}
+
+.enter-desc {
+  width: 100%;
+  font-size: size(28);
+  color: #fff;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+  margin-bottom: size(20);
+}
+
+.enter-container {
+  width: 100%;
+  iframe {
+    width: 100%;
+    height: size(600);
+  }
+}
+
+.nft-img1 {
+  @include img_l_pc(250, 100, 150);
+  animation: hideshow 3.5s 1s ease-in-out infinite alternate;
+}
+
+.nft-img2 {
+  @include img_r_pc(240, 100, 550);
+  animation: hideshow 3.5s 2s ease-in-out infinite alternate;
+}
+
+.nft-img3 {
+  @include img_r_pc(180, 700, 150);
+  animation: hideshow 6.5s 1s ease-in-out infinite alternate;
+}
+
+@keyframes hideshow {
+  to {
+    opacity: 0;
+  }
+}
+
+
+
+@keyframes neon1 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff1177,
+      0 0 70px #ff1177, 0 0 80px #ff1177, 0 0 100px #ff1177, 0 0 150px #ff1177;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff1177,
+      0 0 15px #ff1177, 0 0 20px #ff1177, 0 0 30px #ff1177, 0 0 55px #ff1177;
+  }
+}

@@ -1,18 +1,26 @@
 import * as React from 'react'
 import { useAccount } from 'wagmi'
-import { Account, NetworkSwitcher, Connect } from "./index";
+import { Link } from "react-router-dom";
+import { Connect } from '../components'
+import logo from '../assets/imgs/logo_w.png'
 
 export const Header = () => {
   const [{ data: accountData }] = useAccount();
   return (
     <div className="header">
-      <div className="footer"><Connect /></div>
+      <Link className="logo" to="/">
+        <img src={logo} alt="" />
+      </Link>
       <div className="right">
         {
-          (accountData?.address) && <Account />
+          !accountData?.address ?
+            <Connect /> : <Link className="user-page-link" to="/profile?type=0">
+              <i className="fas fa-user-circle icon-font"></i>
+              個人中心 Hello，{accountData?.address}
+            </Link>
         }
+
       </div>
-      <NetworkSwitcher />
     </div>
   )
 }
