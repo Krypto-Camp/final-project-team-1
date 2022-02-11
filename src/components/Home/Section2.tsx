@@ -11,7 +11,7 @@ export const Section2 = () => {
             TOKENOMICS
           </div>
           <span>貨幣經濟</span>
-          <a href="https://www.notion.so/Rent-Rent-b5460a595b804921b48189dedba940e7" className="white-paper-link" target="_blank">白皮書連結</a>
+          <a href="https://crystal-atlasaurus-78f.notion.site/Rent-Rent-b5460a595b804921b48189dedba940e7" className="white-paper-link" target="_blank">白皮書連結</a>
         </div>
         <img src={tokenomic} alt="" className="tokenomic" />
 

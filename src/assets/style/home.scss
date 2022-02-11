@@ -116,6 +116,10 @@
     letter-spacing: 5px;
     // border-bottom: 5px solid #fe1643;
   }
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
 
   // span {
   //   animation: neon1 1.5s 1s ease-in-out infinite alternate;
@@ -278,6 +282,7 @@
 .discord-link {
   img {
     width: size(50);
+    margin-bottom: 0;
   }
 }
 

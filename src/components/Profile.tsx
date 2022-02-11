@@ -55,24 +55,25 @@ export const Profile = () => {
   };
 
   //取得所有個人頁：租賃中商品
-  const [{ data: myMarketItem }, fetchMyMarketItems] = useContractRead(
-    {
-      addressOrName: market_contract.address,
-      contractInterface: market_contract.abi,
-      signerOrProvider: provider,
-    },
-    "fetchMyMarketItems"
-  ) as any;
+  // const [{ data: myMarketItem }, fetchMyMarketItems] = useContractRead(
+  //   {
+  //     addressOrName: market_contract.address,
+  //     contractInterface: market_contract.abi,
+  //     signerOrProvider: provider,
+  //   },
+  //   "fetchMyMarketItems"
+  // ) as any;
+
 
   //取得所有個人頁：租賃中商品
-  const [{ data: myRentingItem }, fetchMyRentingItems] = useContractRead(
-    {
-      addressOrName: market_contract.address,
-      contractInterface: market_contract.abi,
-      signerOrProvider: provider,
-    },
-    "fetchMyRentingItems"
-  ) as any;
+  // const [{ data: myRentingItem }, fetchMyRentingItems] = useContractRead(
+  //   {
+  //     addressOrName: market_contract.address,
+  //     contractInterface: market_contract.abi,
+  //     signerOrProvider: provider,
+  //   },
+  //   "fetchMyRentingItems"
+  // ) as any;
 
   //取得所有NFT
   const [{ data: marketItem }, fetchMarketItems] = useContractRead(
@@ -84,6 +85,12 @@ export const Profile = () => {
     "fetchMarketItems"
   ) as any;
 
+  const [marketItemCount, setMarketItemCount] = useState(0)
+  if (marketItem?.length > 0 && marketItemCount == 0) {
+    setMarketItemCount(marketItem?.length || 0)
+    console.log(marketItemCount, 'marketItemCount')
+  }
+
   // useEffect(() => {
   //   setNftList(marketItem);
   //   getRefinedData(marketItem);
@@ -93,15 +100,15 @@ export const Profile = () => {
   //但同時打opensea api會報429錯誤，所以要setTimeout
   const getRefinedData = async (parseList: any) => {
     console.log(parseList, 'parseList')
-    // if (!parseList) {
-    //   parseList = []
-    // }
+    if (!parseList) {
+      parseList = []
+    }
     const doSomethingAsync = async (el: any) => {
       const tokenID = el.tokenId?.toString();
       const nftData = await fetch(
         `${OPENSEADOMAIN.TEST}/asset/${el.nftContract}/${tokenID}`
       ).then((x) => x.json());
-      console.log("el", el);
+      // console.log("el", el);
       console.log("nftData", nftData);
       return {
         image_url: nftData?.image_preview_url,
@@ -118,7 +125,7 @@ export const Profile = () => {
     };
     const f = (x: any) =>
       new Promise((resolve) =>
-        setTimeout(() => resolve(doSomethingAsync(x)), 2500)
+        setTimeout(() => resolve(doSomethingAsync(x)), 1500)
       );
     let myData = [];
     for (let job of parseList?.map((x: any) => () => f(x))) {
@@ -126,11 +133,13 @@ export const Profile = () => {
       myData.push(item);
     }
     setNftList(myData);
+    console.log('done!!!!!!!')
     setLoading(false);
   };
 
   useEffect(() => {
     // if (accountData?.address)
+    setLoading(true)
     const query = new URLSearchParams(search);
     const paramField = query.get('type');
     setType(paramField || 'all')
@@ -143,7 +152,7 @@ export const Profile = () => {
         fetchMyNFT();
         break;
       case "myMarketItems":
-        // fetchMyMarketItems();
+        fetchMarketItems();
         //TODO:接myMarketItem, 先前端filter
         const myMarketItems = marketItem?.filter(
           (x: any) => x.lender == accountData?.address
@@ -151,11 +160,13 @@ export const Profile = () => {
         getRefinedData(myMarketItems);
         break;
       case "myRentingItems":
-        // fetchMyRentingItems();
+        fetchMarketItems();
         //TODO:接myRentingItem, 先前端filter
+        console.log(marketItem, 'marketItem')
         const myRentingItems = marketItem?.filter(
           (x: any) => x.renter == accountData?.address
         );
+        console.log(myRentingItems)
         getRefinedData(myRentingItems);
         break;
       case "all":
@@ -164,7 +175,7 @@ export const Profile = () => {
         getRefinedData(marketItem);
         break;
     }
-  }, [accountData?.address, type]);
+  }, [accountData?.address, type, marketItemCount]);
 
   const switchTab = (e: string) => {
     setLoading(true);
@@ -188,7 +199,15 @@ export const Profile = () => {
 
   const Modal = modal[type];
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <div className="confirm-loading flex-c">
+    <div>
+      <Image
+        src={waitingDefault}
+        webp={waiting}
+      />
+      wait loading data...
+    </div>
+  </div>
 
   return (
     <div className="container-profile">
@@ -218,6 +237,13 @@ export const Profile = () => {
       {/* 切換tabs */}
       <div className="type-tap-container">
         <h4
+          onClick={() => switchTab("all")}
+          className={type == "all" ? "focus" : ""}
+        >
+          平台NFT
+        </h4>
+        <div className="border"></div>
+        <h4
           onClick={() => switchTab("myitems")}
           className={type == "myitems" ? "focus" : ""}
         >
@@ -229,22 +255,16 @@ export const Profile = () => {
         >
           出租中
         </h4>
-        <h4
+        {/* <h4
           onClick={() => switchTab("myRentingItems")}
           className={type == "myRentingItems" ? "focus" : ""}
         >
           租賃中
-        </h4>
-        <h4
-          onClick={() => switchTab("all")}
-          className={type == "all" ? "focus" : ""}
-        >
-          平台NFT
-        </h4>
+        </h4> */}
       </div>
       {/* NFT列表 */}
       <div className="card-wrapper">
-        {nftList.length > 0 ? (
+        {nftList?.length > 0 ? (
           nftList.map((x: any) => {
             return (
               <div

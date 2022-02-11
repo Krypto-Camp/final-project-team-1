@@ -49,7 +49,9 @@ export const Section4 = () => {
               Q2  2022
             </div>
             <div className="item-content">
-              → 質押NFT獲取Token 獎勵功能開發
+              → 拿回押金功能<br />
+              → 歸還功能<br />
+              → 質押NFT獲取Token 獎勵功能開發<br />
               → Coming soon
             </div>
           </div>

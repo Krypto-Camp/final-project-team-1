@@ -10,14 +10,13 @@ export const Section5 = () => {
           <div className="label">
             限時活動
           </div>
-          <span>進 Discord 私密群組</span>
+          <span><a href="https://discord.gg/JyqF59MF" target="_blank" className="discord-link">
+            進 Discord 私密群組<img src={discord} alt="" />
+          </a></span>
         </div>
         <div className="enter-desc">
           租借 Rent Rent 平台上的NFT，然後進入 Discord 群 Verify<br />
           可以進到我們的私密群組🙈
-          <a href="" target="_blank" className="discord-link">
-            <img src={discord} alt="" />
-          </a>
         </div>
 
         <div className="enter-container">
