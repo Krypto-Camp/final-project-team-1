@@ -294,11 +294,13 @@ export const Profile = () => {
                     </div>
                   }
                   {
-                    (type== 'all' || type == 'myMarketItems') && !x?.deposit?.toNumber() ? '' : <div>
+                    (type == 'all' || type == 'myMarketItems') && (
+                      !x?.deposit?.toNumber() ? '' : <div>
                       <i className="fa-brands fa-ethereum"></i>
                       <h5 className="grey-text">押金(ETH)</h5>
                       <h5 className="grey-text">{ethers.utils.formatEther(x?.deposit?.toNumber() || 0)}</h5>
                     </div>
+                    )
                   }
 
                 </div>
