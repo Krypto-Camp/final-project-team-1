@@ -1,5 +1,4 @@
 import { useAccount } from 'wagmi'
-import tokenomic from '../../assets/imgs/tokenomic.png'
 
 export const Section4 = () => {
   const [{ data: accountData }] = useAccount();

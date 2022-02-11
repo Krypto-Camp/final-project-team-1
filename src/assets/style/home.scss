@@ -275,6 +275,12 @@
   text-decoration: none;
 }
 
+.discord-link {
+  img {
+    width: size(50);
+  }
+}
+
 @keyframes hideshow {
   to {
     opacity: 0;

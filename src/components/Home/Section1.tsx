@@ -25,7 +25,7 @@ export const Section1 = () => {
         <div className="section1-btns flex-ac flex-ja">
           <div
             className="btn-primary"
-            onClick={() => navigate(`/profile?type=myItems`)}
+            onClick={() => navigate(`/profile?type=myitems`)}
           >
             Loan To Earn
           </div>

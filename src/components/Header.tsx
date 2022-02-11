@@ -15,7 +15,7 @@ export const Header = () => {
         {
           !accountData?.address ?
             <Connect /> : <div className="flex-ac">
-              <Link className="user-page-link" to="/profile?type=0">
+              <Link className="user-page-link" to="/profile?type=myitems">
                 <i className="fas fa-user-circle icon-font"></i>
                 個人中心 Hello，{accountData?.address}
               </Link>

@@ -19,7 +19,7 @@ const infuraId = import.meta.env.VITE_INFURA_ID as string;
 
 // Pick chains
 const chains = [chain.hardhat, ...defaultChains];
-console.log(chains);
+// console.log(chains);
 const defaultChain = chain.mainnet;
 
 // Set up connectors

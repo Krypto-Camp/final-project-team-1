@@ -31,7 +31,7 @@
 .card-item {
   width: 24%;
   margin: 5px;
-  padding: 7px;
+  padding: 2px;
   box-shadow: 1px 1px 6px rgb(227, 227, 227);
   border: 1px solid rgb(227, 227, 227);
   border-radius: 4px;
@@ -46,20 +46,24 @@
 .card-desc {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  padding: size(20) size(10);
   margin: 4px;
 }
 .left-content {
-  width: 80%;
+  width: 100%;
   overflow-wrap: break-word;
 }
 .grey-text {
   color: grey;
 }
 .card-desc h5 {
-  font-size: 12px;
+  font-size: size(18);
+  color: #000;
 }
 .card-item img {
   width: 100%;
+  min-height: size(290);
 }
 .ReactModal__Overlay--after-open {
   background: rgba(0, 0, 0, 0.468) !important;
@@ -131,4 +135,23 @@
   color: #ccc;
   text-align: center;
   margin-top: size(60);
+}
+
+.confirm-loading {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.468);
+  color: #fff;
+  font-size: size(24);
+  font-weight: bold;
+  img {
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+  }
 }

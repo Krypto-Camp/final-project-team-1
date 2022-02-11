@@ -5,10 +5,15 @@ import { CreateModal } from "./CreateModal";
 import { RentModal } from "./RentModal";
 import { OPENSEADOMAIN } from "../constants";
 import { market_contract } from "../config/contract";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import Image from 'react-image-webp';
+import waiting from '../assets/imgs/waiting.webp'
+import waitingDefault from '../assets/imgs/wait-default.png'
+import { ethers } from 'ethers'
 
 export const Profile = () => {
   const navigate = useNavigate();
+  const { search } = useLocation();
   const provider = useProvider();
   const [{ data: accountData }] = useAccount({
     fetchEns: true,
@@ -17,7 +22,8 @@ export const Profile = () => {
   const [curretSelect, setCurretSelect] = useState<NFTObject>();
   const [type, setType] = useState("all");
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [modalIsWait, setIsWait] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   //取的用戶在opensea的所有NFT
   const fetchMyNFT = () => {
@@ -32,7 +38,7 @@ export const Profile = () => {
       });
   };
 
-  const [{}, getMarketItem] = useContractWrite(
+  const [{ }, getMarketItem] = useContractWrite(
     {
       addressOrName: market_contract.address,
       contractInterface: market_contract.abi,
@@ -78,14 +84,18 @@ export const Profile = () => {
     "fetchMarketItems"
   ) as any;
 
-  useEffect(() => {
-    setNftList(marketItem);
-    getRefinedData(marketItem);
-  }, [marketItem]);
+  // useEffect(() => {
+  //   setNftList(marketItem);
+  //   getRefinedData(marketItem);
+  // }, [marketItem]);
 
   //opensea api 為了拿NFT圖片URL
   //但同時打opensea api會報429錯誤，所以要setTimeout
   const getRefinedData = async (parseList: any) => {
+    console.log(parseList, 'parseList')
+    // if (!parseList) {
+    //   parseList = []
+    // }
     const doSomethingAsync = async (el: any) => {
       const tokenID = el.tokenId?.toString();
       const nftData = await fetch(
@@ -98,7 +108,7 @@ export const Profile = () => {
         name: nftData?.asset_contract?.name,
         token_id: el?.token_id?.toString(),
         collection: nftData?.collection?.name,
-        price: el?.price?.toString(),
+        price: el?.price,
         itemId: el?.itemId?.toString(),
         nftContract: el?.nftContract,
         rentStart: el?.rentStart?.toString(),
@@ -108,10 +118,10 @@ export const Profile = () => {
     };
     const f = (x: any) =>
       new Promise((resolve) =>
-        setTimeout(() => resolve(doSomethingAsync(x)), 1500)
+        setTimeout(() => resolve(doSomethingAsync(x)), 2500)
       );
     let myData = [];
-    for (let job of parseList.map((x: any) => () => f(x))) {
+    for (let job of parseList?.map((x: any) => () => f(x))) {
       const item = await job();
       myData.push(item);
     }
@@ -121,6 +131,13 @@ export const Profile = () => {
 
   useEffect(() => {
     // if (accountData?.address)
+    const query = new URLSearchParams(search);
+    const paramField = query.get('type');
+    setType(paramField || 'all')
+    if (!accountData?.address) {
+      return
+    }
+
     switch (type) {
       case "myitems":
         fetchMyNFT();
@@ -171,15 +188,28 @@ export const Profile = () => {
 
   const Modal = modal[type];
 
-  if (loading) return <div className="container-profile">Loading...</div>;
+  if (loading) return <div className="loading">Loading...</div>;
 
   return (
     <div className="container-profile">
+      {/* 等待交易完成 */}
+      {
+        modalIsWait && <div className="confirm-loading flex-c">
+          <div>
+            <Image
+              src={waitingDefault}
+              webp={waiting}
+            />
+            wait transaction confirm...
+          </div>
+        </div>
+      }
       {/* 出租彈窗 */}
       {modalIsOpen && (
         <Modal
           modalIsOpen={modalIsOpen}
           setIsOpen={setIsOpen}
+          setIsWait={setIsWait}
           closeModal={closeModal}
           curretSelect={curretSelect}
           sender={accountData?.address}
@@ -214,32 +244,37 @@ export const Profile = () => {
       </div>
       {/* NFT列表 */}
       <div className="card-wrapper">
-        {nftList ? (
-          nftList.map((x: any) => (
-            <div
-              key={x?.id ? x?.id : x?.itemId}
-              className="card-item"
-              onClick={() => OnSelectNFT(x)}
-            >
-              <img key={x?.nftContract} src={x?.image_url} />
-              <div className="card-desc">
-                <div className="left-content">
-                  <h5 className="grey-text">{x?.name}</h5>
-                  <h5>
-                    {x?.collection?.name
-                      ? x?.collection?.name
-                      : x?.collectionName}
-                    #{x?.token_id}
-                  </h5>
-                </div>
-                <div>
-                  <i className="fa-brands fa-ethereum"></i>
-                  <h5 className="grey-text">Price</h5>
-                  {/* <h5 className="grey-text">{x?.price}</h5> */}
+        {nftList.length > 0 ? (
+          nftList.map((x: any) => {
+            return (
+              <div
+                key={x?.id ? x?.id : x?.itemId}
+                className="card-item"
+                onClick={() => OnSelectNFT(x)}
+              >
+                <img key={x?.nftContract} src={x?.image_url} />
+                <div className="card-desc">
+                  <div className="left-content">
+                    <h5 className="grey-text">{x?.name}</h5>
+                    <h5>
+                      {x?.collection?.name
+                        ? x?.collection?.name
+                        : x?.collectionName}
+                      #{x?.token_id}
+                    </h5>
+                  </div>
+                  {
+                    !x?.price?.toNumber() ? '' : <div>
+                      <i className="fa-brands fa-ethereum"></i>
+                      <h5 className="grey-text">Price(ETH)</h5>
+                      <h5 className="grey-text">{ethers.utils.formatEther(x?.price?.toNumber() || 0)}</h5>
+                    </div>
+                  }
+
                 </div>
               </div>
-            </div>
-          ))
+            )
+          })
         ) : (
           <div className="empty-hint">暫無資料</div>
         )}

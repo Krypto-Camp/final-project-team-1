@@ -26,6 +26,7 @@
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.3",
     "hardhat": "^2.8.2",
+    "react-image-webp": "^0.8.0",
     "sass": "^1.49.7",
     "typescript": "^4.4.4",
     "vite": "^2.7.2"

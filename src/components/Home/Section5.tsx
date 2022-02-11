@@ -1,5 +1,5 @@
 import { useAccount } from 'wagmi'
-import tokenomic from '../../assets/imgs/tokenomic.png'
+import discord from '../../assets/imgs/discord.png'
 
 export const Section5 = () => {
   const [{ data: accountData }] = useAccount();
@@ -15,7 +15,11 @@ export const Section5 = () => {
         <div className="enter-desc">
           租借 Rent Rent 平台上的NFT，然後進入 Discord 群 Verify<br />
           可以進到我們的私密群組🙈
+          <a href="" target="_blank" className="discord-link">
+            <img src={discord} alt="" />
+          </a>
         </div>
+
         <div className="enter-container">
           <iframe src="https://www.youtube.com/embed/_41tFu5SeTk" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
         </div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { useProvider, useContractWrite, useContract, useSigner } from "wagmi";
 import { market_contract, ERC721_contract, rentrent_token } from "../config/contract";
+import { ethers } from 'ethers'
 
 export const CreateModal = (props: any) => {
   const seconds = {
@@ -39,8 +40,6 @@ export const CreateModal = (props: any) => {
     "createMarketItem"
   );
 
-  
-
   const nftContract = useContract({
     addressOrName: curretSelect?.asset_contract?.address,
     contractInterface: ERC721_contract.abi,
@@ -48,15 +47,17 @@ export const CreateModal = (props: any) => {
   });
 
   const create = async () => {
+    props.setIsWait(true)
     let approveTransaction = await nftContract.approve(
       market_contract.address,
       Number(curretSelect?.token_id)
     );
     await approveTransaction.wait();
 
-    let ethprice = Number(price) * 1000000000000000000
-    let ethdeposit = Number(deposit) * 1000000000000000000
+    let ethprice = ethers.utils.parseEther(price)
+    let ethdeposit = ethers.utils.parseEther(deposit)
     console.log(ethprice, ethdeposit, 'ethttertee')
+    // return 
 
     const result = await createMarketItem({
       args: [
@@ -76,6 +77,7 @@ export const CreateModal = (props: any) => {
     console.log(
       `input price:${price},deposit:${deposit},validTime:${validTime}`
     );
+    props.setIsWait(false);
     props.setIsOpen(false);
   };
 
