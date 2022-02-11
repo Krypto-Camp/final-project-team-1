@@ -2,6 +2,7 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { useProvider, useContractWrite, useContractRead } from "wagmi";
 import { market_contract } from "../config/contract";
+import { ethers } from 'ethers'
 
 export const RentModal = (props: any) => {
   const customStyles = {
@@ -20,7 +21,6 @@ export const RentModal = (props: any) => {
   const provider = useProvider();
 
   const curretSelect = props.curretSelect;
-
   //取得所有NFT
   const [{ data }, getMarketItem] = useContractRead(
     {
@@ -49,7 +49,7 @@ export const RentModal = (props: any) => {
       overrides: {
         gasLimit: 2030000,
         gasPrice: 60000000000,
-        value: 1000,
+        value: curretSelect?.price?.toNumber() + curretSelect?.deposit?.toNumber(),
       },
     });
     console.log("rentMarketItem", result);
@@ -74,6 +74,9 @@ export const RentModal = (props: any) => {
             <h5 className="grey-text" title={curretSelect?.nftContract}>
               {curretSelect?.nftContract}
             </h5>
+            <h5 className="grey-text">
+              租金+押金：{Number(ethers.utils.formatEther(curretSelect?.price?.toNumber())) + Number(ethers.utils.formatEther(curretSelect?.deposit?.toNumber()))}
+            </h5>
           </div>
         </div>
         <div>
@@ -88,7 +91,7 @@ export const RentModal = (props: any) => {
           >
             Cancel
           </button>
-          <button onClick={rent} className="comfirm-btn btn">
+          <button onClick={() => rent()} className="comfirm-btn btn">
             Comfirm
           </button>
         </div>

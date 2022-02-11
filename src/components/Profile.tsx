@@ -116,6 +116,7 @@ export const Profile = () => {
         token_id: el?.token_id?.toString(),
         collection: nftData?.collection?.name,
         price: el?.price,
+        deposit: el?.deposit,
         itemId: el?.itemId?.toString(),
         nftContract: el?.nftContract,
         rentStart: el?.rentStart?.toString(),
@@ -147,6 +148,8 @@ export const Profile = () => {
       return
     }
 
+    console.log(marketItem, 'marketItem')
+
     switch (type) {
       case "myitems":
         fetchMyNFT();
@@ -162,7 +165,6 @@ export const Profile = () => {
       case "myRentingItems":
         fetchMarketItems();
         //TODO:接myRentingItem, 先前端filter
-        console.log(marketItem, 'marketItem')
         const myRentingItems = marketItem?.filter(
           (x: any) => x.renter == accountData?.address
         );
@@ -266,6 +268,7 @@ export const Profile = () => {
       <div className="card-wrapper">
         {nftList?.length > 0 ? (
           nftList.map((x: any) => {
+            console.log(x, 'xxxxxx')
             return (
               <div
                 key={x?.id ? x?.id : x?.itemId}
@@ -286,8 +289,15 @@ export const Profile = () => {
                   {
                     !x?.price?.toNumber() ? '' : <div>
                       <i className="fa-brands fa-ethereum"></i>
-                      <h5 className="grey-text">Price(ETH)</h5>
+                      <h5 className="grey-text">租金(ETH)</h5>
                       <h5 className="grey-text">{ethers.utils.formatEther(x?.price?.toNumber() || 0)}</h5>
+                    </div>
+                  }
+                  {
+                    (type== 'all' || type == 'myMarketItems') && !x?.deposit?.toNumber() ? '' : <div>
+                      <i className="fa-brands fa-ethereum"></i>
+                      <h5 className="grey-text">押金(ETH)</h5>
+                      <h5 className="grey-text">{ethers.utils.formatEther(x?.deposit?.toNumber() || 0)}</h5>
                     </div>
                   }
 
