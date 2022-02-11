@@ -3,6 +3,14 @@ import Modal from "react-modal";
 import { useProvider, useContractWrite, useContract, useSigner } from "wagmi";
 import { market_contract, ERC721_contract, rentrent_token } from "../config/contract";
 import { ethers } from 'ethers'
+import Swal from 'sweetalert2'
+
+import 'sweetalert2/src/sweetalert2.scss';
+import '@sweetalert2/theme-dark/dark.css';
+
+
+
+
 
 export const CreateModal = (props: any) => {
   const seconds = {
@@ -79,6 +87,11 @@ export const CreateModal = (props: any) => {
     );
     props.setIsWait(false);
     props.setIsOpen(false);
+    Swal.fire(
+      '恭喜!',
+      '獲得 100 RentRent Token 獎勵',
+      'success'
+    )
   };
 
   return (
