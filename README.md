@@ -4,7 +4,7 @@
 - User can loan the NFT
 - User can borrow the NFT
 
-Website Link: [rentrent.xyz](http://rentrent.xyz)
+Website Link: [rentrent.xyz](https://rentrent.xyz/)
 
 
 ## 安裝前準備
