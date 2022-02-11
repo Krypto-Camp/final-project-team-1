@@ -41,6 +41,7 @@ export const RentModal = (props: any) => {
   );
 
   const rent = async () => {
+    console.log(curretSelect?.itemId, 'curretSelect?.itemId')
     const result = await rentMarketItem({
       args: [
         curretSelect?.nftContract, //nftContract

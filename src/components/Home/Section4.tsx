@@ -49,10 +49,9 @@ export const Section4 = () => {
               Q2  2022
             </div>
             <div className="item-content">
-              → 拿回押金功能<br />
-              → 歸還功能<br />
-              → 質押NFT獲取Token 獎勵功能開發<br />
-              → Coming soon
+              → 租賃歸還，押金機制<br />
+              → 質押 NFT 獲取平台代幣 $RENT 的獎勵功能開發<br />
+              → More & more ...
             </div>
           </div>
         </div>

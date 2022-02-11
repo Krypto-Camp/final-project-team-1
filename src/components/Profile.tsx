@@ -287,18 +287,18 @@ export const Profile = () => {
                     </h5>
                   </div>
                   {
-                    !x?.price?.toNumber() ? '' : <div>
+                    !x?.price?.toString() ? '' : <div>
                       <i className="fa-brands fa-ethereum"></i>
                       <h5 className="grey-text">租金(ETH)</h5>
-                      <h5 className="grey-text">{ethers.utils.formatEther(x?.price?.toNumber() || 0)}</h5>
+                      <h5 className="grey-text">{ethers.utils.formatEther(x?.price?.toString() || 0)}</h5>
                     </div>
                   }
                   {
                     (type == 'all' || type == 'myMarketItems') && (
-                      !x?.deposit?.toNumber() ? '' : <div>
+                      !x?.deposit?.toString() ? '' : <div>
                       <i className="fa-brands fa-ethereum"></i>
                       <h5 className="grey-text">押金(ETH)</h5>
-                      <h5 className="grey-text">{ethers.utils.formatEther(x?.deposit?.toNumber() || 0)}</h5>
+                      <h5 className="grey-text">{ethers.utils.formatEther(x?.deposit?.toString() || 0)}</h5>
                     </div>
                     )
                   }
